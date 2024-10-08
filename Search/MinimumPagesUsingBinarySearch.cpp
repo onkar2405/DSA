@@ -1,13 +1,13 @@
 #include <iostream>
 using namespace std;
 
-int isFisible(int *arr, int len, int possibleMinPages, int actualGivenStudents)
+int isFeasible(int *arr, int len, int possibleMinPages, int actualGivenStudents)
 {
   int sum = 0;
   int studentsRequiredForGivenPossiblePages = 1;
   for (int i = 0; i < len; i++)
   {
-    if (sum + arr[i] > possibleMinPages)
+    if ((sum + arr[i]) > possibleMinPages)
     {
       sum = arr[i];
       studentsRequiredForGivenPossiblePages++;
@@ -18,7 +18,7 @@ int isFisible(int *arr, int len, int possibleMinPages, int actualGivenStudents)
     }
   }
 
-  return actualGivenStudents < studentsRequiredForGivenPossiblePages;
+  return studentsRequiredForGivenPossiblePages > actualGivenStudents;
 }
 
 int minPages(int *arr, int len, int students)
@@ -36,14 +36,13 @@ int minPages(int *arr, int len, int students)
   int low = maxNum;
   int high = sum;
   int possibleMinPages;
-  int res;
+  int res = -1;
   while (low <= high)
   {
     possibleMinPages = (low + high) / 2;
-    if (isFisible(arr, len, possibleMinPages, students))
+    if (!isFeasible(arr, len, possibleMinPages, students))
     {
       res = possibleMinPages;
-      cout << "res" << res;
       high = possibleMinPages - 1;
     }
     else
@@ -57,8 +56,8 @@ int minPages(int *arr, int len, int students)
 
 int main()
 {
-  int arr[] = {10, 5, 20};
-  int len = 3;
+  int arr[] = {10, 20, 30, 40, 50};
+  int len = 5;
   int students = 2;
 
   cout << minPages(arr, len, students);
