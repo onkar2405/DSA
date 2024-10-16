@@ -1,24 +1,18 @@
 #include <iostream>
 using namespace std;
 
-void checkIfStringIsSubsequenceRecursive(string str1, string str2, string subStr = "")
+bool checkIfStringIsSubsequenceRecursive(string str1, string str2, int i = 0, int j = 0)
 {
-  if (subStr.compare(str1))
-  {
-    cout << "YES";
-    return;
-  }
-  if (subStr.size() == str2.size())
-  {
-    cout << "NO";
-    return;
-  }
+  if (j == str2.size())
+    return true;
+  if (i == str1.size())
+    return false;
 
-  for (int i = 0; i < str2.size(); i++)
+  if (str2[j] == str1[i])
   {
-    checkIfStringIsSubsequenceRecursive(str1, str2, subStr);
-    checkIfStringIsSubsequenceRecursive(str1, str2, subStr + str2[i]);
+    return checkIfStringIsSubsequenceRecursive(str1, str2, i + 1, j + 1);
   }
+  return checkIfStringIsSubsequenceRecursive(str1, str2, i + 1, j);
 }
 
 int checkIfStringIsSubsequence(string str1, string str2)
@@ -36,10 +30,12 @@ int checkIfStringIsSubsequence(string str1, string str2)
 
 int main()
 {
-  string str2 = "lmao";
-  string str1 = "geeksforgeeks";
+  string str2 = "ab";
+  string str1 = "abc";
 
   cout << checkIfStringIsSubsequence(str1, str2);
+
+  cout << checkIfStringIsSubsequenceRecursive(str1, str2);
 
   return 0;
 }
