@@ -2,6 +2,9 @@
 #include <vector>
 using namespace std;
 
+/**
+ * https://leetcode.com/problems/merge-sorted-array/description/?envType=study-plan-v2&envId=top-interview-150
+ */
 void mergeOptimal(vector<int> &nums1, int m, vector<int> &nums2, int n)
 {
   int i = m - 1;
