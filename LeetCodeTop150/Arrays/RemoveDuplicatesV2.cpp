@@ -25,6 +25,26 @@ int removeDuplicates(vector<int> &nums)
   return temp.size();
 }
 
+int removeDuplicatesOptimized(vector<int> &nums)
+{
+  int indexToUpdate = 2;
+  if (nums.size() <= 2)
+  {
+    return nums.size();
+  }
+
+  for (int i = 2; i < nums.size(); i++)
+  {
+    if (nums[i] != nums[indexToUpdate - 2])
+    {
+      nums[indexToUpdate] = nums[i];
+      indexToUpdate++;
+    }
+  }
+
+  return indexToUpdate;
+}
+
 int main()
 {
   vector<int> nums = {0, 0, 1, 1, 1, 1, 2, 3, 3};
