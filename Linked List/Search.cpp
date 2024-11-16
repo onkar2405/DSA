@@ -40,8 +40,7 @@ int searchNodeRecursive(Node *node, int num, int index)
   {
     return ++index;
   }
-  index = index + 1;
-  return searchNodeRecursive(node->next, num, index);
+  return searchNodeRecursive(node->next, num, ++index);
 }
 
 void recursiveTraversal(Node *itr)
@@ -61,19 +60,25 @@ int main()
   Node *node1 = new Node(4);
   Node *node2 = new Node(1);
   Node *node3 = new Node(13);
-  Node *node4 = new Node(40);
+  Node *node4 = new Node(24);
+  Node *node5 = new Node(20);
+  Node *node6 = new Node(44);
+  Node *node7 = new Node(22);
 
   node1->next = node2;
   node2->next = node3;
   node3->next = node4;
+  node4->next = node5;
+  node5->next = node6;
+  node6->next = node7;
 
   cout << searchNode(node1, 50);
   cout << "\n"
        << searchNode(node1, 13);
 
   cout << "\n"
-       << searchNodeRecursive(node1, 50, 0);
+       << searchNodeRecursive(node1, 20, 0);
   cout << "\n"
-       << searchNodeRecursive(node1, 13, 0);
+       << searchNodeRecursive(node1, 22, 0);
   return 0;
 }
