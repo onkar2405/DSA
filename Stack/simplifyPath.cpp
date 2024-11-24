@@ -3,7 +3,6 @@
 using namespace std;
 
 string simplifyPath(string path)
-    string simplifyPath(string path)
 {
   vector<string> stack;
   int i = 0;
