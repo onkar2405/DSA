@@ -30,3 +30,28 @@ void sortColors(vector<int> &nums)
     }
   }
 }
+
+void sortColorsThreePointers(vector<int> &nums)
+{
+  int r = 0;
+  int b = nums.size() - 1;
+  int w = 0;
+  while (w <= b)
+  {
+    if (nums[w] == 2)
+    {
+      swap(nums[w], nums[b]);
+      b--;
+    }
+    else if (nums[w] == 0)
+    {
+      swap(nums[w], nums[r]);
+      r++;
+      w++;
+    }
+    else
+    {
+      w++;
+    }
+  }
+}
