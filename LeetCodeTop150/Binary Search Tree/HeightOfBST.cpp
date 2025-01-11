@@ -1,5 +1,6 @@
 #include <iostream>
 #include <queue>
+#include <math.h>
 using namespace std;
 
 struct TreeNode
@@ -24,7 +25,7 @@ int sizeRecursive(TreeNode *node)
     return 0;
   }
 
-  return 1 + sizeRecursive(node->left) + sizeRecursive(node->right);
+  return 1 + max(sizeRecursive(node->left), sizeRecursive(node->right));
 }
 
 int main()
@@ -39,13 +40,13 @@ int main()
   TreeNode *node6 = new TreeNode(24);
 
   root->left = node1;
-  root->right = node2;
 
   node1->left = node3;
-  node1->right = node4;
 
   node3->left = node5;
   node5->left = node6;
+  node6->left = node4;
+  node4->left = node2;
 
   cout << sizeRecursive(root);
 
