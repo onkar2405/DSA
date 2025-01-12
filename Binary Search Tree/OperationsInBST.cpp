@@ -41,42 +41,83 @@ bool searchInBST(Node *root, int num)
   return searchInBST(root->left, num);
 }
 
-Node *insetInBST(Node *root, int val)
+Node *deleteNode(Node *root)
 {
-  Node *newNode = new Node(val);
+  if (root == NULL)
+    return NULL;
 
+  if (root->left == NULL)
+  {
+    Node *temp = root->right;
+    delete root;
+    return temp;
+  }
+
+  if (root->right == NULL)
+  {
+    Node *temp = root->left;
+    delete root;
+    return temp;
+  }
+
+  Node *succParent = root;
+  Node *succ = root->right;
+
+  // Find in-order successor (smallest in the right subtree)
+  while (succ->left != NULL)
+  {
+    succParent = succ;
+    succ = succ->left;
+  }
+
+  // Copy the inorder successor's content to this node
+  root->val = succ->val;
+
+  // Delete the inorder successor
+  if (succParent->left == succ)
+  {
+    succParent->left = succ->right;
+  }
+  else
+  {
+    succParent->right = succ->right;
+  }
+
+  delete succ;
+  return root;
+}
+
+void printInOrder(Node *root)
+{
   if (root == NULL)
   {
-    return newNode;
+    return;
+  }
+  printInOrder(root->left);
+  cout << root->val << " ";
+  printInOrder(root->right);
+}
+
+Node *deleteBST(Node *root, int val)
+{
+  if (root == NULL)
+  {
+    return NULL;
   }
 
-  while (root != NULL)
+  if (val < root->val)
   {
-    if (val < root->val)
-    {
-      if (root->left == NULL)
-      {
-        root->left = newNode;
-        break;
-      }
-      else
-      {
-        root = root->left;
-      }
-    }
-    else if (val > root->val)
-    {
-      if (root->right == NULL)
-      {
-        root->right = newNode;
-        break;
-      }
-      else
-      {
-        root = root->right;
-      }
-    }
+    root->left = deleteBST(root->left, val);
   }
+  else if (val > root->val)
+  {
+    root->right = deleteBST(root->right, val);
+  }
+  else
+  {
+    root = deleteNode(root);
+  }
+
   return root;
 }
 
@@ -117,9 +158,13 @@ int main()
   node3->left = node5;
   node4->left = node6;
 
-  cout << searchInBST(root, 24) << "\n";
-  cout << searchInBST(root, 16);
+  // cout << searchInBST(root, 24) << "\n";
+  // cout << searchInBST(root, 16);
 
-  Node *root = insetInBST(root, 10);
+  Node *rootNew = insertInBSTRecursive(root, 10);
+
+  printInOrder(rootNew);
+  cout << "\n";
+  printInOrder(deleteBST(rootNew, 20));
   return 0;
 }
