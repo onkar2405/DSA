@@ -41,6 +41,64 @@ bool searchInBST(Node *root, int num)
   return searchInBST(root->left, num);
 }
 
+Node *insetInBST(Node *root, int val)
+{
+  Node *newNode = new Node(val);
+
+  if (root == NULL)
+  {
+    return newNode;
+  }
+
+  while (root != NULL)
+  {
+    if (val < root->val)
+    {
+      if (root->left == NULL)
+      {
+        root->left = newNode;
+        break;
+      }
+      else
+      {
+        root = root->left;
+      }
+    }
+    else if (val > root->val)
+    {
+      if (root->right == NULL)
+      {
+        root->right = newNode;
+        break;
+      }
+      else
+      {
+        root = root->right;
+      }
+    }
+  }
+  return root;
+}
+
+Node *insertInBSTRecursive(Node *root, int val)
+{
+  if (root == NULL)
+  {
+    return new Node(val);
+  }
+
+  if (root->val < val)
+  {
+    root->right = insertInBSTRecursive(root->right, val);
+  }
+  else if (root->val > val)
+  {
+    root->left = insertInBSTRecursive(root->left, val);
+  }
+
+  return root;
+}
+
 int main()
 {
 
@@ -62,5 +120,6 @@ int main()
   cout << searchInBST(root, 24) << "\n";
   cout << searchInBST(root, 16);
 
+  Node *root = insetInBST(root, 10);
   return 0;
 }
