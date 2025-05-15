@@ -13,7 +13,7 @@ void heapifiedMap(vector<int> &binaryHeap, int currentIndex)
     smallest = leftIndex;
   }
 
-  if (rightIndex < binaryHeap.size() && parentValue > binaryHeap[rightIndex])
+  if (rightIndex < binaryHeap.size() && binaryHeap[smallest] > binaryHeap[rightIndex])
   {
     smallest = rightIndex;
   }
