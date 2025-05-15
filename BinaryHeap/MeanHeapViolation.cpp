@@ -2,28 +2,27 @@
 #include <vector>
 using namespace std;
 
-int getViolatingIndex(vector<int> binaryHeap, int currentLevel)
+void heapifiedMap(vector<int> &binaryHeap, int currentIndex)
 {
-  if (currentLevel >= binaryHeap.size())
+  int parentValue = binaryHeap[currentIndex];
+  int leftIndex = 2 * currentIndex + 1;
+  int rightIndex = 2 * currentIndex + 2;
+  int smallest = currentIndex;
+  if (leftIndex < binaryHeap.size() && parentValue > binaryHeap[leftIndex])
   {
-    return binaryHeap.size() - 1;
+    smallest = leftIndex;
   }
 
-  int parentValue = binaryHeap[currentLevel];
-  int leftIndex = 2 * currentLevel + 1;
-  int leftVal = binaryHeap[leftIndex];
-  int rightIndex = 2 * currentLevel + 2;
-  int rightVal = binaryHeap[rightIndex];
-
-  int minOfAll = min(parentValue, min(leftVal, rightVal));
-
-  if (minOfAll != parentValue)
+  if (rightIndex < binaryHeap.size() && parentValue > binaryHeap[rightIndex])
   {
-    // return minOfAll==leftVal ? leftIndex : rightIndex;
-    return parentValue;
+    smallest = rightIndex;
   }
 
-  return getViolatingIndex(binaryHeap, currentLevel + 1);
+  if (smallest != currentIndex)
+  {
+    swap(binaryHeap[currentIndex], binaryHeap[smallest]);
+    heapifiedMap(binaryHeap, smallest);
+  }
 }
 
 void printHeap(vector<int> binaryHeap)
@@ -38,10 +37,10 @@ void printHeap(vector<int> binaryHeap)
 
 int main()
 {
-  // vector<int> binaryMeanHeap = {40, 20, 30, 35, 25, 80, 32, 100, 70, 60};
-  vector<int> binaryMeanHeap = {10, 15, 30, 35, 60, 80, 32, 100, 70, 25};
+  vector<int> binaryMeanHeap = {40, 20, 30, 35, 25, 80, 32, 100, 70, 60};
 
   printHeap(binaryMeanHeap);
-  cout << getViolatingIndex(binaryMeanHeap, 0);
+  heapifiedMap(binaryMeanHeap, 0);
+  printHeap(binaryMeanHeap);
   return 0;
 }
