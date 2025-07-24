@@ -11,11 +11,6 @@ vector<int> insertInHeap(vector<int> binaryHeap, int val, int currentIndex)
   int parentIndex = (currentIndex - 1) / 2;
   int parentValue = binaryHeap[parentIndex];
 
-  if (parentValue < val)
-  {
-    return binaryHeap;
-  }
-
   if (parentValue > val)
   {
     swap(binaryHeap[currentIndex], binaryHeap[parentIndex]);
