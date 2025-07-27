@@ -30,7 +30,7 @@ void buildMaxHeap(vector<int> &nums, int index)
   }
   if (maxIndex != index)
   {
-    swap(nums[index], nums[maxIndex]);
+    swap(nums[maxIndex], nums[index]);
     buildMaxHeap(nums, maxIndex);
   }
 }
@@ -51,7 +51,8 @@ void maxHeapify(vector<int> &nums, int index, int size)
   }
   if (maxIndex != index)
   {
-    swap(nums[index], nums[maxIndex]);
+    swap(nums[maxIndex], nums[index]);
+    maxHeapify(nums, maxIndex, size);
   }
 }
 
@@ -66,7 +67,7 @@ int findKthLargest(vector<int> &binaryHeap, int k)
   {
     int updatedSize = binaryHeap.size() - i;
     swap(binaryHeap[0], binaryHeap[updatedSize - 1]);
-    maxHeapify(binaryHeap, 0, updatedSize);
+    maxHeapify(binaryHeap, 0, updatedSize - 1);
   }
 
   return binaryHeap[0];
@@ -75,7 +76,7 @@ int findKthLargest(vector<int> &binaryHeap, int k)
 int main()
 {
   vector<int> binaryMinHeap = {1, 12, 14, 111, 200};
-  int k = 2;
+  int k = 3;
 
   cout << "\nfindKthLargest:" << findKthLargest(binaryMinHeap, k);
   return 0;
