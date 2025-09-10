@@ -1,27 +1,36 @@
 #include <iostream>
 #include <vector>
-#include <unordered_map>
+#include <queue>
 using namespace std;
 
 void BFS(vector<int> adj[], int source, int size)
 {
-  unordered_map<int, int> umap;
+  vector<bool> visited(size, false);
+  queue<int> q;
+  q.push(source);
+  visited[source] = true;
 
-  for (int i = source; i < size; i++)
+  vector<int> arr;
+
+  while (!q.empty())
   {
-    if (umap.find(i) == umap.end())
+    int num = q.front(); // 0
+    q.pop();
+    arr.push_back(num);
+
+    for (int i : adj[num])
     {
-      cout << i << " ";
-      umap[i] = 1;
-    }
-    for (int j = 0; j < adj[i].size(); j++)
-    {
-      if (umap.find(adj[i][j]) == umap.end())
+      if (!visited[i])
       {
-        cout << adj[i][j] << " ";
-        umap[adj[i][j]] = 1;
+        visited[i] = true;
+        q.push(i);
       }
     }
+  }
+
+  for (int i = 0; i < arr.size(); i++)
+  {
+    cout << arr[i] << " ";
   }
 }
 
