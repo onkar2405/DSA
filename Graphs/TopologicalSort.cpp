@@ -6,22 +6,23 @@ using namespace std;
 
 void topologicalSort(vector<vector<int>> &edges, int size)
 {
-  vector<int> inDegree(size, 0);
-  queue<int> q;
+  vector<int> indegrees(size, 0);
+  vector<int> result(size);
+  vector<int> isVisited(size, false);
 
-  // Creating inDegree
   for (int i = 0; i < size; i++)
   {
-    for (int j : edges[i])
+    for (int j = 0; j < edges[i].size(); j++)
     {
-      inDegree[j]++;
+      indegrees[edges[i][j]]++;
     }
   }
 
-  // Passing all nodes with 0 indegrees
-  for (int i = 0; i < inDegree.size(); i++)
+  queue<int> q;
+
+  for (int i = 0; i < size; i++)
   {
-    if (inDegree[i] == 0)
+    if (indegrees[i] == 0)
     {
       q.push(i);
     }
@@ -36,11 +37,9 @@ void topologicalSort(vector<vector<int>> &edges, int size)
 
     for (int i : edges[num])
     {
-      if (inDegree[i] > 0)
-      {
-        inDegree[i]--;
-      }
-      if (inDegree[i] == 0)
+      indegrees[i]--;
+
+      if (indegrees[i] == 0)
       {
         q.push(i);
       }
