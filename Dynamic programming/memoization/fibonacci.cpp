@@ -2,7 +2,7 @@
 #include <vector>
 using namespace std;
 
-int fiboTabulization(int n)
+int fiboTabulation(int n)
 {
   vector<int> memo(n + 1, -1);
 
