@@ -2,6 +2,21 @@
 #include <vector>
 using namespace std;
 
+int fiboTabulization(int n)
+{
+  vector<int> memo(n + 1, -1);
+
+  memo[0] = 0;
+  memo[1] = 1;
+
+  for (int i = 2; i <= n; i++)
+  {
+    memo[i] = memo[i - 1] + memo[i - 2];
+  }
+
+  return memo[n];
+}
+
 int fibo(int n, vector<int> &memo)
 {
   // 0 1 1 2 3 5 8 13 21..
@@ -30,5 +45,7 @@ int main()
   vector<int> memo(n + 1, -1);
 
   cout << fibo(n, memo) << "\n";
+  cout << fiboTabulization(n) << "\n";
+
   return 0;
 }
