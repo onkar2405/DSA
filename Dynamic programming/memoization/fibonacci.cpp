@@ -45,7 +45,7 @@ int main()
   vector<int> memo(n + 1, -1);
 
   cout << fibo(n, memo) << "\n";
-  cout << fiboTabulization(n) << "\n";
+  cout << fiboTabulation(n) << "\n";
 
   return 0;
 }
