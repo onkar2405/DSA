@@ -1,67 +1,97 @@
 #include <iostream>
 #include <list>
+#include <vector>
+#include <algorithm>
+#include <cmath>
 using namespace std;
 
-int BUCKET = 7;
-
-void insertElement(list<int> *table, int value)
+bool isAllDone(vector<int> &result, int size)
 {
-  int index = value % BUCKET;
-  table[index].push_back(value);
+  return result.size() == size;
 }
 
-void removeElement(list<int> *table, int key)
+vector<int> spiralOrder(vector<vector<int>> &matrix)
 {
-  int index = key % BUCKET;
-  table[index].remove(key);
-}
+  int rowCount = matrix.size();
+  int colCount = matrix[0].size();
+  int size = rowCount * colCount;
 
-void displayElements(list<int> *table)
-{
-  for (int i = 0; i < BUCKET; i++)
+  vector<int> result;
+  int r = 0;
+  int c = 0;
+  int itr = 0;
+  int totalItrs = 0;
+
+  while (true)
   {
-    for (auto x : table[i])
+    for (c = itr; c < colCount - itr; c++)
     {
-      cout << x << " ";
+      if (isAllDone(result, size))
+      {
+        return result;
+      }
+      result.push_back(matrix[r][c]);
     }
-    cout << "\n";
-  }
-}
+    c = c - 1;
 
-bool searchElement(list<int> *table, int key)
-{
-  int index = key % BUCKET;
-  for (auto x : table[index])
-  {
-    if (x == key)
+    for (r = r + 1; r < rowCount - itr; r++)
     {
-      return true;
+      if (isAllDone(result, size))
+      {
+        return result;
+      }
+      result.push_back(matrix[r][c]);
     }
+    r = r - 1;
+
+    for (c = c - 1; c >= itr; c--)
+    {
+      if (isAllDone(result, size))
+      {
+        return result;
+      }
+
+      result.push_back(matrix[r][c]);
+    }
+    c = c + 1;
+
+    for (r = r - 1; r >= itr + 1; r--)
+    {
+      if (isAllDone(result, size))
+      {
+        return result;
+      }
+
+      result.push_back(matrix[r][c]);
+    }
+    r = r + 1;
+
+    if (isAllDone(result, size))
+    {
+      return result;
+    }
+
+    itr++;
   }
-  return false;
+
+  return result;
 }
 
 int main()
 {
-  list<int> *table = new list<int>[BUCKET];
 
-  insertElement(table, 20);
-  insertElement(table, 30);
-  insertElement(table, 40);
-  insertElement(table, 50);
-  insertElement(table, 70);
+  vector<vector<int>> matrix = {{1, 2, 3, 4, 5},
+                                {6, 7, 8, 9, 10},
+                                {11, 12, 13, 14, 15},
+                                {16, 17, 18, 19, 20},
+                                {21, 22, 23, 24, 25}};
+  vector<int> result = spiralOrder(matrix);
 
-  displayElements(table);
-
-  cout << "After removing List is: \n";
-
-  removeElement(table, 20);
-  removeElement(table, 10);
-
-  displayElements(table);
-
-  cout << "Search result: " << searchElement(table, 70) << "\n";
-  cout << "Search result: " << searchElement(table, 20);
+  for (int num : result)
+  {
+    cout << num << " ";
+  }
+  cout << endl;
 
   return 0;
 }
